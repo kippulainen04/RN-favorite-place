@@ -3,15 +3,26 @@ import { Alert, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import IconButton from '../components/UI/IconButton';
 
-const Map = ({navigation}) => {
-    const [selectedLocation, setSeletecedLocation] = useState()
+const Map = ({ navigation, route }) => {
+
+    const initialLocation = route.params && {
+        lat: route.params.initialLat,
+        lng: route.params.initialLng,
+    };
+
+    const [selectedLocation, setSeletecedLocation] = useState(initialLocation)
+
     const region = {
-        latitude: 37.78,
-        longitude: -122,
+        latitude: initialLocation ? initialLocation.lat : 37.78,
+        longitude: initialLocation ? initialLocation.lng : -122,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421
     };
+
     function selectLocationHanlder(event) {
+        if (initialLocation) {
+            return;
+        }
         const lat = event.nativeEvent.coordinate.latitude;
         const lng = event.nativeEvent.coordinate.longitude;
 
@@ -37,6 +48,10 @@ const Map = ({navigation}) => {
     }, [navigation, selectedLocation]);
 
     useLayoutEffect(() => {
+        if(initialLocation) {
+            return;
+        }
+
         navigation.setOptions({
             headerRight: ({tintColor}) => (
             <IconButton 
@@ -46,7 +61,7 @@ const Map = ({navigation}) => {
             onPress={savePickerLocationHandler}/>
             ),
         });
-    }, [navigation, savePickerLocationHandler]);
+    }, [navigation, savePickerLocationHandler, initialLocation]);
 
   return (
     <MapView 

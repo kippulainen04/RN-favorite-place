@@ -9,7 +9,10 @@ const PlaceDetails = ({route, navigation}) => {
 
 
     function showOnMapHandler() {
-
+        navigation.navigate('Map', {
+            initialLat: fetchedPlace.location.lat,
+            initialLng: fetchedPlace.location.lng,
+        });
     }
     const selectedPlaceId = route.params.placeId;
 
@@ -37,7 +40,7 @@ const PlaceDetails = ({route, navigation}) => {
     <ScrollView>
         <Image 
             style={styles.image}
-            source={{ uri: fetchedPlace.imageUrl }}
+            source={{ uri: fetchedPlace.imageUri }}
         />
         <View style={styles.locationContainer}>
             <View style={styles.addressContainer}>
