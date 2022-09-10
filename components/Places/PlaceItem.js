@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     color: Colors.gray700
   },
   address: {
-    fontSize: 18,
+    fontSize: 12,
     color: Colors.gray700
   }
 })
