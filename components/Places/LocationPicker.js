@@ -6,7 +6,7 @@ import { Colors } from "../../constants/colors"
 import { getMapPreview } from "../../util/location"
 import OutlineButton from "../UI/OutlineButton"
 
-const LocationPicker = () => {
+const LocationPicker = ({ onPickLocation }) => {
     const navigation = useNavigation();
     const route = useRoute();
     const isFocused = useIsFocused();
@@ -22,6 +22,10 @@ const LocationPicker = () => {
             setPickedLocation(mapPickedLocation);
         }
     } ,[route, isFocused]);
+
+    useEffect(() => {
+        onPickLocation(pickedLocation)
+    }, [pickedLocation, onPickLocation]);
 
     async function verifyPermissions() {
 
@@ -54,8 +58,8 @@ const LocationPicker = () => {
         setPickedLocation({
             lat: location.coords.latitude,
             lng: location.coords.longitude,
-
-        })
+        });
+       
     }
     function pickOnMapHandler() {
         navigation.navigate('Map');
