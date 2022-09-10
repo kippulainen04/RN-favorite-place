@@ -42,9 +42,7 @@ export default function App() {
           <Stack.Screen 
           name="Map" 
           component={Map}
-          options={{
-            title: 'The Whole Map'
-          }} />
+           />
         </Stack.Navigator>
       </NavigationContainer>
     </>
